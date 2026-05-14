@@ -1,0 +1,2733 @@
+16:26:56  INFO      [asei_runner]  ASEI runner: ask
+16:26:56  INFO      [neo4j]  Neo4j connected: bolt://localhost:7687
+16:26:56  INFO      [reasoning_agent]  Reasoning Agent: processing question: How does the configuration of the transmission mode in the acceptance test speci
+16:27:07  WARNING   [neo4j.notifications]  Received notification from DBMS server: <GqlStatusObject gql_status='01N52', status_description='warn: unknown property key. The property `doc_id` does not exist. Verify that the spelling is correct.', position=<SummaryInputPosition line=7, column=22, offset=252>, raw_classification='UNRECOGNIZED', classification=<NotificationClassification.UNRECOGNIZED: 'UNRECOGNIZED'>, raw_severity='WARNING', severity=<NotificationSeverity.WARNING: 'WARNING'>, diagnostic_record={'_classification': 'UNRECOGNIZED', '_status_parameters': {'propkey': 'doc_id'}, '_severity': 'WARNING', '_position': {'offset': 252, 'line': 7, 'column': 22}, 'OPERATION': '', 'OPERATION_CODE': '0', 'CURRENT_SCHEMA': '/'}> for query: "\n        CALL db.index.vector.queryNodes('chunk_embedding_index', $top_k, $embedding)\n        YIELD node AS chunk, score\n        WHERE score >= $min_score\n        RETURN chunk.id    AS chunk_id,\n               chunk.text  AS text,\n               chunk.doc_id AS doc_id,\n               score\n        ORDER BY score DESC\n        "
+16:27:07  INFO      [reasoning_agent]    Reasoning: vector search returned 5 seed chunks
+16:27:07  INFO      [reasoning_agent]    Reasoning: subgraph expanded — 300 nodes across 3 hops
+16:27:07  WARNING   [multi_llm_client]  Unknown task_type 'prosecutor', falling back to heavy_reasoning
+16:27:08  INFO      [multi_llm_client]    Rate limited on openai/gpt-oss-120b (https://api.groq.com/openai/v1), cooldown 1592 s, moving to fallback
+16:27:08  INFO      [multi_llm_client]    Cooldown set: host=api.groq.com for 1592 s (all models on this host skipped)
+16:27:09  WARNING   [multi_llm_client]  Unknown task_type 'defender', falling back to heavy_reasoning
+16:27:09  WARNING   [multi_llm_client]  Unknown task_type 'skeptic', falling back to heavy_reasoning
+16:27:10  INFO      [reasoning_agent]  Reasoning Agent complete: confidence=0.00, evidence=0 nodes
+{
+  "question": "How does the configuration of the transmission mode in the acceptance test specification for communication via bus (Context 1) influence the behavior of the IPDU group when the mode is switched during the main test execution (Context 2)?",
+  "answer": "",
+  "reasoning": "",
+  "evidence": [],
+  "path_steps": [
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Port At_281_Sg1",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Rxecu",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_102_Txsg1",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_102_Txipdu_1",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Txecu",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_101_Ipdu_2",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_100_Sg1",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_100_Sg3",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "PduUpdateBitOfAt_281_Ipdu",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_104_Sg1",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "IpduGroup",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Communicationdatabase",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_100_Sg4",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_104_Ipdu_1",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_107_Ipdu_4",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_100_Ipdu_1",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_105_Ipdu_3",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Ipdu_Deactivated",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_105_Sg2",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Nonqueueddataelement",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_100_Sg2",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_101_Sggr1",
+      "via": [
+        "MENTIONS"
+      ],
+      "hops": 1
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Signal_13",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Rte_E_Com_Stopped",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Trigtxcounter",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Port At_281_Sg1",
+      "via": [
+        "MENTIONS",
+        "HAS_PARAMETER"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Rte_E_Com_Stopped",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_238_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Ldcomsignal",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Signal_11",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Sn_83",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Testcases",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_101_Sggr1",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_102_Txsg1",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "<At_Ipdugroup>",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Ipdu_Activated",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Datasendcompletedevent",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "req_RS_SYST_00056",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1486_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1489_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_234_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "<At_Ipdugroup>",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Receiver Port",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1485_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_227_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_105_Ipdu_3",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "<At_Ipdugroup>",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "<At_Ipdugroup>",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "<At_Ipdugroup>",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "<At_Ipdugroup>",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Sn_83",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Communicationtransfer",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Underlyingbus",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "J1939 Pgs",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Rte_E_Max_Age_Exceeded",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_238_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Signal_01",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_238_Sg1_Value",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Signal_Group_12",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "req_ATS_COMINDEP_00102",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Grsg1_Invalidvalue",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "At_260_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Sut",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1485_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1472_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1239_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_234_Ipdugroup",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_104_Ipdu_1",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "req_constr_9322",
+      "via": [
+        "SOURCED_FROM",
+        "HAS_REQUIREMENT"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Restartcode",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "req_constr_1387",
+      "via": [
+        "SOURCED_FROM",
+        "HAS_REQUIREMENT"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Grsg1_Value1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Txipdu1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Rx Ipdu 1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Tptransmission",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Logicalprogramflowmonitoring",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "PrepareBusSleepMode",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Can-Interface",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1486_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1473_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Sender Port",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1485_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Pdu1 Format Pgn",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "J1939 Pgs",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_234_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_236_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_235_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1487_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1473_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1485_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1239_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "req_RS_SYST_00054",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "req_RS_SYST_00051",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "req_RS_SYST_00049",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "At_260_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_101_Sggr1",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_107_Ipdu_4",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_104_Sg1",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_105_Sg2",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_100_Sg2",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_100_Ipdu_1",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Datasendcompletedevent",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Senderreceiverport",
+      "via": [
+        "MENTIONS",
+        "HAS_PARAMETER"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Sg84_1",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Sg84_1",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Maximumtransmissionunit",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Datasize",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Testcases",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Channel",
+      "via": [
+        "MENTIONS",
+        "ALLOCATED_TO"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "PduUpdateBitOfAt_281_Ipdu",
+      "via": [
+        "MENTIONS",
+        "HAS_PARAMETER"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Bswmmoderequest",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_225_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_224_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_238_Sg1_Value",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Signal_12",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Rte_E_Max_Age_Exceeded",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_205_Sg2_Value_3",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Rte_E_No_Data",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Rxipdu5",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Signal_12",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "At_1239_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Rxipdu5",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "req_ATS_COMINDEP_00102",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Repetitionperiod",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Txipdu1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Rte_E_Max_Age_Exceeded",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Signal_Group_11",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Grsg1_Invalidvalue",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "req_constr_9322",
+      "via": [
+        "SOURCED_FROM",
+        "HAS_REQUIREMENT"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Trigtxcounter",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "req_constr_1387",
+      "via": [
+        "SOURCED_FROM",
+        "HAS_REQUIREMENT"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "At_1239_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Signal5_1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Grsg1_Value_Init",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Signal6_1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Signal_01",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Repetitionperiod",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Grsg1_Value1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Grsg1_Value_Init",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "req_constr_9322",
+      "via": [
+        "SOURCED_FROM",
+        "HAS_REQUIREMENT"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "req_ATS_COMINDEP_00104",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Datasendcompletedevent",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Txipdu1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Signal6_1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "req_ATS_COMINDEP_00102",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Repetitionperiod",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Signal_13",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Signal_01",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Signal5_1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Signal6_1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Grsg1_Value_Init",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Datasendcompleted",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Triggeredsignal",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Txnotification",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Alivenessindications",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "req_SWS_CanIf_00068",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Tx-Filter",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Wakeup Frame (Wuf)",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "<At_1486_Sg1>",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1487_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1472_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1047_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1476_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Receiver Port",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_230_Grsg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_227_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Ipinterface",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Dropcount",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Broadcast Destination Address",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Pdu2 Format Pgn",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_238_Ipdugroup",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Tx Ecu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_275_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Rx Ecu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Grsg1_Value1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Senderport",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Sender Port",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "<At_1486_Sg1>",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1472_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1047_Ipdu",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1472_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_1476_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Frtp",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_230_Grsg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Pdur",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "req_RS_SYST_00050",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "req_RS_SYST_00052",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "req_RS_SYST_00053",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "At_1239_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "req_RS_SYST_00055",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Signal6_1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Signal_Group_11",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Signal_01",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "req_ATS_COMINDEP_00072",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_102_Txipdu_1",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Txipdu1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_101_Ipdu_2",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Signal_Group_12",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Signal_Tc9Tx",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "req_SWS_Com_00330",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_100_Sg1",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "<At_Ipdugroup>",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "At_100_Ipdu_1",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "req_constr_9322",
+      "via": [
+        "SOURCED_FROM",
+        "HAS_REQUIREMENT"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_224_Ipdu",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "req_ATS_COMINDEP_00224",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_224_Ipdu",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_224_Sg1",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Sg84_2",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Sn_84",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Sg84_2",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "Sn_84",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "req_RS_BRF_01648",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Datasize",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Underlyingbus",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "req_RS_BRF_01648",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Maximumtransmissionunit",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Communicationtransfer",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "req_constr_1387",
+      "via": [
+        "SOURCED_FROM",
+        "HAS_REQUIREMENT"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Signal_12",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "I-PDU",
+      "via": [
+        "MENTIONS",
+        "CONTAINS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Txconfirmation",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Bswmmode Port",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "If_At_Swc_Actionsbswm",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_205_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_205_Sg2_Value_3",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Signal_01",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_224_Grsg1_Value_Init",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_224_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Rte_E_No_Data",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Signal_Group_11",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Signal_Group_12",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Signal_13",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Signal_11",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Bswmmoderequest",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_205_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "At_225_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "Transmission Confirmation",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "req_constr_9322",
+      "via": [
+        "SOURCED_FROM",
+        "HAS_REQUIREMENT"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationFlexRay_p0025_c000",
+      "node": "req_constr_1387",
+      "via": [
+        "SOURCED_FROM",
+        "HAS_REQUIREMENT"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Rte_E_Max_Age_Exceeded",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Signal_11",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Signal_01",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Rte_E_Max_Age_Exceeded",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Trigtxcounter",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Signal5_1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "Dataelement",
+      "via": [
+        "MENTIONS",
+        "DEFINED_IN"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "req_ATS_COMINDEP_00104",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0020_c000",
+      "node": "req_ATS_COMINDEP_00102",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "At_260_Sg1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Rx Ipdu 1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Rxipdu5",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Grsg1_Invalidvalue",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Rx Ipdu 1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0014_c000",
+      "node": "req_constr_1387",
+      "via": [
+        "SOURCED_FROM",
+        "HAS_REQUIREMENT"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_224_Grsg1_Value_Init",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_224_Sg1",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_224_Grsg1_Value_Init",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "req_ATS_COMINDEP_00224",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "req_SWS_Com_00787",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "req_SWS_Com_00812",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "req_SWS_Com_00305",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "req_ATS_COMINDEP_00072",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "req_ATS_COMINDEP_00074",
+      "via": [
+        "PREV_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "req_ATS_COMINDEP_00074",
+      "via": [
+        "NEXT_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Rte_E_Max_Age_Exceeded",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Rxipdu5",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0067_c000",
+      "node": "Signal5_1",
+      "via": [
+        "SIMILAR_TO",
+        "MENTIONS"
+      ],
+      "hops": 2
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Communicationdatabase",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_101_Ipdu_2",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "req_ATS_COMINDEP_00101",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Txecu",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_100_Sg3",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "req_ATS_COMINDEP_00238",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Flow Control Frame",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_100_Sg1",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_100_Sg2",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "req_RS_BRF_01632",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_100_Ipdu_1",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_105_Ipdu_3",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Non Queued Data Element",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_1047_Sg1",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Signalgroup_75",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_104_Ipdu_1",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_101_Sggr1",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Ipdu_Off_On",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_102_Txsg1",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_107_Ipdu_4",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Ipdu_Activated_Lin_Start_Schedule",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "ConsecutiveFrames",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_102_Txipdu_1",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Rxecu",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Trig_Ipdu_Send",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_104_Sg1",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_100_Sg4",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Sender/Receiver Ports",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_1487_Sg1_Value",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Signalgroup_74",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "Sg61_2",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    },
+    {
+      "seed": "AUTOSAR_ATS_CommunicationViaBus_p0113_c000",
+      "node": "At_105_Sg2",
+      "via": [
+        "HAS_CHUNK",
+        "HAS_CHUNK",
+        "MENTIONS"
+      ],
+      "hops": 3
+    }
+  ],
+  "confidence": 0.0,
+  "run_at": "2026-05-12T10:56:56.822949+00:00",
+  "errors": []
+}
