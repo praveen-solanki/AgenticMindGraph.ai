@@ -25,7 +25,7 @@ The ASEI system is divided into two primary subsystems:
 *   **Graph Database:** Neo4j
 *   **LLM Integration:** vLLM (local inference), OpenAI-compatible APIs (Groq, Sambanova, NVIDIA NIM, etc.)
 *   **Embeddings:** BAAI/bge-m3 (1024-dim)
-*   **Key Libraries:** `openai`, `neo4j`, `langgraph` (style), `rouge-score`, `bert-score`, `pypdfum2`, `sentence-transformers`.
+*   **Key Libraries:** `openai`, `neo4j`, `langgraph` (style), `rouge-score`, `bert-score`, `pymupdf4llm`, `sentence-transformers`.
 
 ---
 
