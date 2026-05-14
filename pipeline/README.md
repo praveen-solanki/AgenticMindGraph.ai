@@ -13,7 +13,7 @@ The pipeline is orchestrated by `main.py` and consists of 9 sequential stages (0
 
 ### Stage 1: PDF Extraction (`stage1_extract.py`)
 *   **Purpose:** Raw text extraction from PDFs.
-*   **Action:** Uses `pypdfum2` to extract text from every page. It applies header/footer margins (defined in `settings.py`) to ignore page numbers and standard headers.
+*   **Action:** Uses `pymupdf4llm` to extract text from every page. It applies header/footer margins (defined in `settings.py`) to ignore page numbers and standard headers.
 
 ### Stage 2: Noise Removal (`stage2_clean.py`)
 *   **Purpose:** Filters out non-content text.
