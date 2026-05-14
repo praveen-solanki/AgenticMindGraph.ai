@@ -1,0 +1,25 @@
+# --- Core Framework & Orchestration ---
+httpx
+pydantic
+python-dotenv
+tqdm
+
+# --- LLM & Agent Layer ---
+openai
+langchain
+langchain-openai
+langchain-core
+
+# --- Database & Graph ---
+neo4j
+
+# --- PDF Processing ---
+pymupdf
+pymupdf4llm
+
+# --- NLP, Embeddings & Metrics ---
+sentence-transformers
+torch
+numpy
+rouge-score
+bert-score
