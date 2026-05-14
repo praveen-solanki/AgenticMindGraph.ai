@@ -1,0 +1,689 @@
+{
+  "cycle_id": "20260513T090121Z",
+  "started_at": "2026-05-13T09:01:21.358952+00:00",
+  "completed_at": "2026-05-13T09:04:38.183700+00:00",
+  "current_agent": "",
+  "evolution_report": {
+    "run_at": "2026-05-13T09:01:21.365443+00:00",
+    "stale_count": 0,
+    "low_confidence_count": 0,
+    "schema_drift_count": 0,
+    "total_flagged": 0,
+    "total_cleared": 0,
+    "flagged_ids": [],
+    "errors": []
+  },
+  "conflict_report": {
+    "run_at": "2026-05-13T09:01:21.496652+00:00",
+    "structural_conflicts": 31,
+    "semantic_conflicts": 22,
+    "total_conflicts": 53,
+    "conflict_pairs": [
+      {
+        "from": "concept_tcp",
+        "to": "concept_someip",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Tcp' and 'SOME/IP' each depend on the other"
+      },
+      {
+        "from": "function_rte",
+        "to": "function_nvm",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'RTE' and 'NvM' each depend on the other"
+      },
+      {
+        "from": "functionalcluster_com",
+        "to": "functionalcluster_pdur",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Com' and 'Pdur' each depend on the other"
+      },
+      {
+        "from": "functionalcluster_com",
+        "to": "functionalcluster_bswm",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Com' and 'Bswm' each depend on the other"
+      },
+      {
+        "from": "function_can_driver",
+        "to": "function_can_interface",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Can_Driver' and 'Can_Interface' each depend on the other"
+      },
+      {
+        "from": "functionalcluster_csm",
+        "to": "functionalcluster_cryif",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Csm' and 'Cryif' each depend on the other"
+      },
+      {
+        "from": "functionalcluster_cryptography",
+        "to": "functionalcluster_cryif",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Cryptography' and 'Cryif' each depend on the other"
+      },
+      {
+        "from": "concept_bsw",
+        "to": "concept_wdgm",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'BSW' and 'Wdgm' each depend on the other"
+      },
+      {
+        "from": "function_com",
+        "to": "function_pdur",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Com' and 'Pdur' each depend on the other"
+      },
+      {
+        "from": "concept_operatingsystem",
+        "to": "functionalcluster_executionmanagement",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Operatingsystem' and 'ExecutionManagement' each depend on the other"
+      },
+      {
+        "from": "concept_application",
+        "to": "concept_cryptographicservice",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Application' and 'CryptographicService' each depend on the other"
+      },
+      {
+        "from": "concept_transformer",
+        "to": "concept_rte",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Transformer' and 'RTE' each depend on the other"
+      },
+      {
+        "from": "concept_master",
+        "to": "concept_satellite",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Master' and 'Satellite' each depend on the other"
+      },
+      {
+        "from": "configparameter_lowermultiplicity",
+        "to": "configparameter_uppermultiplicity",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Lowermultiplicity' and 'Uppermultiplicity' each depend on the other"
+      },
+      {
+        "from": "system_os",
+        "to": "function_bsw_scheduler",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Os' and 'Bsw_Scheduler' each depend on the other"
+      },
+      {
+        "from": "concept_bsw",
+        "to": "concept_partition",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'BSW' and 'Partition' each depend on the other"
+      },
+      {
+        "from": "concept_bsw",
+        "to": "concept_os",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'BSW' and 'Os' each depend on the other"
+      },
+      {
+        "from": "concept_flexray",
+        "to": "concept_pdu",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'FlexRay' and 'PDU' each depend on the other"
+      },
+      {
+        "from": "concept_counter",
+        "to": "concept_loss_of_information",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Counter' and 'Loss Of Information' each depend on the other"
+      },
+      {
+        "from": "concept_counter",
+        "to": "concept_delay_of_information",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Counter' and 'Delay Of Information' each depend on the other"
+      },
+      {
+        "from": "concept_data_id",
+        "to": "concept_insertion_of_information",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Data Id' and 'Insertion Of Information' each depend on the other"
+      },
+      {
+        "from": "concept_data_id",
+        "to": "concept_masquerading",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Data Id' and 'Masquerading' each depend on the other"
+      },
+      {
+        "from": "concept_data_id",
+        "to": "concept_incorrect_addressing",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Data Id' and 'Incorrect Addressing' each depend on the other"
+      },
+      {
+        "from": "concept_counter",
+        "to": "concept_incorrectsequenceofinformation",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Counter' and 'IncorrectSequenceOfInformation' each depend on the other"
+      },
+      {
+        "from": "concept_crc",
+        "to": "concept_data_corruption",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Crc' and 'Data Corruption' each depend on the other"
+      },
+      {
+        "from": "concept_crc",
+        "to": "concept_asymmetric_information_sent_from_a_sender_to_multiple_receiv",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Crc' and 'Asymmetric Information Sent From A Sender To Multiple Receivers' each depend on the other"
+      },
+      {
+        "from": "concept_counter",
+        "to": "concept_blocking_access_to_a_communication_channel",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Counter' and 'Blocking Access To A Communication Channel' each depend on the other"
+      },
+      {
+        "from": "concept_dataid",
+        "to": "concept_incorrectaddressing",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Dataid' and 'Incorrectaddressing' each depend on the other"
+      },
+      {
+        "from": "concept_crc",
+        "to": "concept_dataid",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'Crc' and 'Dataid' each depend on the other"
+      },
+      {
+        "from": "concept_bsw",
+        "to": "concept_cdd",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'BSW' and 'CDD' each depend on the other"
+      },
+      {
+        "from": "concept_pdu",
+        "to": "concept_com",
+        "type": "structural",
+        "evidence": "Bidirectional DEPENDS_ON loop: 'PDU' and 'Com' each depend on the other"
+      },
+      {
+        "from": "concept_functionaldescription",
+        "to": "concept_requirementsgrouping",
+        "type": "semantic",
+        "evidence": "The definitions for 'Functionaldescription' and 'Requirementsgrouping' are not provided, but given their names and the context of AUTOSAR, they are likely distinct concepts and cannot be considered synonyms despite the high embedding similarity score."
+      },
+      {
+        "from": "concept_applicationsoftwarecomponent",
+        "to": "concept_client_port",
+        "type": "semantic",
+        "evidence": "The concepts 'ApplicationSoftwareComponent' and 'Client Port' have distinct roles in AUTOSAR; one is a software entity while the other is an interface point, making them mutually exclusive."
+      },
+      {
+        "from": "concept_applicationsoftwarecomponent",
+        "to": "concept_server_port",
+        "type": "semantic",
+        "evidence": "The concepts 'ApplicationSoftwareComponent' and 'Server Port' are fundamentally different entities in the AUTOSAR architecture, with distinct roles and functionalities."
+      },
+      {
+        "from": "concept_applicationsoftwarecomponent",
+        "to": "concept_serverrunnable",
+        "type": "semantic",
+        "evidence": "ApplicationSoftwareComponent and ServerRunnable are distinct concepts in AUTOSAR; the former is a top-level component while the latter is a runnable entity within a component."
+      },
+      {
+        "from": "concept_applicationsoftwarecomponent",
+        "to": "concept_client_port",
+        "type": "semantic",
+        "evidence": "The concepts 'ApplicationSoftwareComponent' and 'Client Port' have distinct roles in AUTOSAR; one is a software entity while the other is an interface point, making them mutually exclusive."
+      },
+      {
+        "from": "concept_applicationsoftwarecomponent",
+        "to": "concept_server_port",
+        "type": "semantic",
+        "evidence": "The concepts 'ApplicationSoftwareComponent' and 'Server Port' are fundamentally different entities in the AUTOSAR architecture, with distinct roles and functionalities."
+      },
+      {
+        "from": "concept_applicationsoftwarecomponent",
+        "to": "concept_serverrunnable",
+        "type": "semantic",
+        "evidence": "ApplicationSoftwareComponent and ServerRunnable are distinct concepts in AUTOSAR; the former is a top-level component while the latter is a runnable entity within a component."
+      },
+      {
+        "from": "concept_functionaldescription",
+        "to": "concept_requirementsgrouping",
+        "type": "semantic",
+        "evidence": "The definitions for 'Functionaldescription' and 'Requirementsgrouping' are not provided, but given their names and the context of AUTOSAR, they are likely distinct concepts and cannot be considered synonyms despite the high embedding similarity score."
+      },
+      {
+        "from": "concept_clearness",
+        "to": "concept_technicalterm",
+        "type": "semantic",
+        "evidence": "The provided definitions for 'Clearness' and 'Technicalterm' are empty, making it impossible to determine their relationship."
+      },
+      {
+        "from": "concept_testability",
+        "to": "concept_technicalterm",
+        "type": "semantic",
+        "evidence": "The definitions provided are incomplete and do not provide enough information to determine if they are synonymous, complementary, or contradictory; however, the high embedding similarity score suggests a potential error in the embeddings."
+      },
+      {
+        "from": "concept_clearness",
+        "to": "concept_analysis",
+        "type": "semantic",
+        "evidence": "The concepts 'Clearness' and 'Analysis' have fundamentally different meanings and cannot be considered synonymous despite their high embedding similarity score."
+      },
+      {
+        "from": "concept_test",
+        "to": "concept_clearness",
+        "type": "semantic",
+        "evidence": "The concepts 'Test' and 'Clearness' have fundamentally different meanings and are not semantically equivalent despite the high embedding similarity score."
+      },
+      {
+        "from": "concept_flashcontroller",
+        "to": "concept_errorregister",
+        "type": "semantic",
+        "evidence": "The high embedding similarity score is misleading because 'Flashcontroller' and 'Errorregister' refer to distinct components with different functionalities in an automotive system."
+      },
+      {
+        "from": "concept_flashcontroller",
+        "to": "concept_errorregister",
+        "type": "semantic",
+        "evidence": "The high embedding similarity score is misleading because 'Flashcontroller' and 'Errorregister' refer to distinct components with different functionalities in an automotive system."
+      },
+      {
+        "from": "concept_clearness",
+        "to": "concept_technicalterm",
+        "type": "semantic",
+        "evidence": "The provided definitions for 'Clearness' and 'Technicalterm' are empty, making it impossible to determine their relationship."
+      },
+      {
+        "from": "concept_testability",
+        "to": "concept_technicalterm",
+        "type": "semantic",
+        "evidence": "The definitions provided are incomplete and do not provide enough information to determine if they are synonymous, complementary, or contradictory; however, the high embedding similarity score suggests a potential error in the embeddings."
+      },
+      {
+        "from": "concept_clearness",
+        "to": "concept_analysis",
+        "type": "semantic",
+        "evidence": "The concepts 'Clearness' and 'Analysis' have fundamentally different meanings and cannot be considered synonymous despite their high embedding similarity score."
+      },
+      {
+        "from": "concept_test",
+        "to": "concept_clearness",
+        "type": "semantic",
+        "evidence": "The concepts 'Test' and 'Clearness' have fundamentally different meanings and are not semantically equivalent despite the high embedding similarity score."
+      },
+      {
+        "from": "concept_supportfortraceability",
+        "to": "concept_verbalformsforobligation",
+        "type": "semantic",
+        "evidence": "The concepts 'Support for traceability' and 'Verbal forms for obligation' are fundamentally different in meaning and purpose, despite their high embedding similarity score."
+      }
+    ],
+    "errors": []
+  },
+  "synthesis_report": {
+    "run_at": "2026-05-13T09:02:19.539842+00:00",
+    "candidates_found": 500,
+    "hypotheses_proposed": 40,
+    "hypotheses_written": 40,
+    "hypothesis_edges": [
+      {
+        "from": "concept_ecu",
+        "to": "concept_supervisedentity",
+        "type": "MANAGES",
+        "conf": 0.85,
+        "rationale": "An ECU (Electronic Control Unit) often manages or controls various components and systems within a vehicle, which could include entities that are supervised. The high number of shared neighbors suggests a strong indirect relationship, indicating that an ECU likely has a direct management role over SupervisedEntities."
+      },
+      {
+        "from": "concept_ecu",
+        "to": "concept_cdd",
+        "type": "INTERACTS_WITH",
+        "conf": 0.85,
+        "rationale": "Given the high number of shared structural neighbours, it is likely that ECU and CDD interact in some way within the system, even if this interaction is not directly represented in the graph."
+      },
+      {
+        "from": "concept_application",
+        "to": "concept_task",
+        "type": "ASSOCIATES_WITH",
+        "conf": 0.85,
+        "rationale": "Given that 'Application' and 'Task' share a significant number of common neighbors, it is likely that an application often manages or is associated with specific tasks, which could justify a direct relationship."
+      },
+      {
+        "from": "concept_supervisedentity",
+        "to": "concept_os",
+        "type": "DEPENDS_ON",
+        "conf": 0.75,
+        "rationale": "The 'SupervisedEntity' may require an operating system ('Os') to run and manage its processes, indicating a dependency."
+      },
+      {
+        "from": "concept_application",
+        "to": "concept_memorypartition",
+        "type": "DEPENDS_ON",
+        "conf": 0.85,
+        "rationale": "An application often requires memory management, and a MemoryPartition can provide a dedicated section of memory for the application to use, ensuring efficient and isolated memory operations."
+      },
+      {
+        "from": "concept_vfb",
+        "to": "concept_timing_protection",
+        "type": "DEPENDS_ON",
+        "conf": 0.85,
+        "rationale": "VFB (Voltage Feedback) often requires precise timing to ensure stability and performance, which can be protected by Timing Protection mechanisms."
+      },
+      {
+        "from": "concept_task",
+        "to": "concept_vfb",
+        "type": "DEPENDS_ON",
+        "conf": 0.75,
+        "rationale": "Given that 'Task' often requires specific tools or frameworks to be executed, and 'VFB' (Virtual Frame Buffer) could be one such tool or environment, it is plausible that tasks may depend on VFB for execution, especially in contexts where visual output or simulation is required."
+      },
+      {
+        "from": "concept_application",
+        "to": "concept_component",
+        "type": "COMPOSED_OF",
+        "conf": 0.85,
+        "rationale": "Applications are often composed of multiple components, which work together to provide the desired functionality. The strong indirect connection suggests a likely compositional relationship."
+      },
+      {
+        "from": "concept_os",
+        "to": "concept_software_component",
+        "type": "DEPENDS_ON",
+        "conf": 0.85,
+        "rationale": "Operating Systems (OS) provide the environment and services necessary for software components to function, making it likely that software components depend on an OS."
+      },
+      {
+        "from": "concept_vfb",
+        "to": "concept_cdd",
+        "type": "CO_OCCURS_WITH",
+        "conf": 0.75,
+        "rationale": "Given the significant number of shared structural neighbors (11), it is likely that VFB and CDD co-occur in similar contexts or applications, suggesting a meaningful relationship."
+      },
+      {
+        "from": "concept_application",
+        "to": "concept_timing_protection",
+        "type": "REQUIRES",
+        "conf": 0.85,
+        "rationale": "Applications often require timing protection to ensure correct and secure operation, especially in real-time or safety-critical systems."
+      },
+      {
+        "from": "concept_os",
+        "to": "concept_timing_protection",
+        "type": "DEPENDS_ON",
+        "conf": 0.85,
+        "rationale": "Operating Systems (OS) often require Timing Protection mechanisms to ensure the security and reliability of time-sensitive operations."
+      },
+      {
+        "from": "concept_application",
+        "to": "concept_vfb",
+        "type": "USES",
+        "conf": 0.75,
+        "rationale": "Given that 'Application' and 'VFB' share a significant number of common neighbors, it is likely that an application might use VFB (Virtual Frame Buffer) for display or testing purposes."
+      },
+      {
+        "from": "concept_ecu",
+        "to": "concept_os",
+        "type": "DEPENDS_ON",
+        "conf": 0.85,
+        "rationale": "An ECU (Electronic Control Unit) typically requires an operating system (OS) to manage its hardware and execute control algorithms efficiently."
+      },
+      {
+        "from": "concept_portinterface",
+        "to": "concept_rte",
+        "type": "DEPENDS_ON",
+        "conf": 0.85,
+        "rationale": "The PortInterface likely depends on the Run-Time Environment (RTE) for communication and data exchange in automotive software systems."
+      },
+      {
+        "from": "concept_swc",
+        "to": "concept_prport",
+        "type": "CO_OCCURS_WITH",
+        "conf": 0.75,
+        "rationale": "Given that 'Swc' and 'Prport' share a significant number of common neighbors (9), it suggests that they often appear together in related contexts or processes."
+      },
+      {
+        "from": "concept_component",
+        "to": "concept_modeswitchinterface",
+        "type": "INTERACTS_WITH",
+        "conf": 0.75,
+        "rationale": "Given that 'Component' and 'Modeswitchinterface' share a significant number of common neighbors, it is likely that they interact within the system, possibly through configuration or operational interfaces."
+      },
+      {
+        "from": "concept_rte",
+        "to": "concept_prport",
+        "type": "CO_OCCURS_WITH",
+        "conf": 0.75,
+        "rationale": "Given the high number of shared structural neighbours, it is likely that 'RTE' and 'Prport' frequently appear together in related contexts or documents, suggesting a co-occurrence relationship."
+      },
+      {
+        "from": "concept_vfb",
+        "to": "concept_os",
+        "type": "CO_OCCURS_WITH",
+        "conf": 0.75,
+        "rationale": "Given the strong structural bridge of 8 shared neighbors, it is likely that VFB and Os co-occur in similar contexts or systems."
+      },
+      {
+        "from": "concept_port",
+        "to": "concept_modeswitchinterface",
+        "type": "INTERFACES_WITH",
+        "conf": 0.85,
+        "rationale": "Given that both 'Port' and 'Modeswitchinterface' share a significant number of common neighbors, it is likely that a 'Port' can interface with a 'Modeswitchinterface', facilitating the configuration and management of network modes."
+      },
+      {
+        "from": "concept_rte",
+        "to": "concept_core",
+        "type": "DEPENDS_ON",
+        "conf": 0.85,
+        "rationale": "Given that 'RTE' (Run-Time Environment) and 'Core' share multiple common neighbors, it is likely that the run-time environment depends on core components or functionalities for its operation."
+      },
+      {
+        "from": "concept_modeswitchinterface",
+        "to": "concept_prport",
+        "type": "INTERFACES_WITH",
+        "conf": 0.8,
+        "rationale": "Given that both 'Modeswitchinterface' and 'Prport' share a significant number of common neighbors, it is likely that they interact or interface with each other in some way within the system."
+      },
+      {
+        "from": "concept_service",
+        "to": "concept_osapplication",
+        "type": "DEPENDS_ON",
+        "conf": 0.85,
+        "rationale": "A service often depends on an operating system and its applications to function properly, as the OS provides the necessary environment and resources."
+      },
+      {
+        "from": "concept_dataelement",
+        "to": "concept_osapplication",
+        "type": "INTERACTS_WITH",
+        "conf": 0.8,
+        "rationale": "Given that 'Dataelement' and 'Os-Application' share a significant number of common neighbors, it is likely that data elements are used or manipulated by operating system applications, indicating an interaction."
+      },
+      {
+        "from": "concept_osapplication",
+        "to": "concept_microcontroller",
+        "type": "DEPENDS_ON",
+        "conf": 0.85,
+        "rationale": "An OS application often requires a microcontroller or similar hardware to execute and perform its functions, indicating a dependency."
+      },
+      {
+        "from": "concept_client",
+        "to": "concept_field",
+        "type": "INTERACTS_WITH",
+        "conf": 0.8,
+        "rationale": "Given that 'Client' and 'Field' share a significant number of common neighbors, it is plausible that a client interacts with fields in various contexts, such as form submissions or data entry."
+      },
+      {
+        "from": "concept_swc",
+        "to": "concept_modedeclarationgroup",
+        "type": "ASSOCIATES_WITH",
+        "conf": 0.8,
+        "rationale": "Given that 'Swc' and 'Modedeclarationgroup' share a significant number of common neighbors (7), it is likely that they are part of the same system or context, suggesting a meaningful association."
+      },
+      {
+        "from": "concept_senderreceiverinterface",
+        "to": "concept_bsw",
+        "type": "INTERFACES_WITH",
+        "conf": 0.85,
+        "rationale": "Given that 'Senderreceiverinterface' is likely an interface for communication and 'BSW' (Basic Software) is a component in automotive software stacks, it is plausible that they interface with each other to facilitate data exchange and control."
+      },
+      {
+        "from": "concept_rte",
+        "to": "concept_modeswitchinterface",
+        "type": "INTERFACES_WITH",
+        "conf": 0.8,
+        "rationale": "Given that both 'RTE' and 'Modeswitchinterface' share a significant number of common neighbors, it is likely that they interact or interface with each other in some capacity within the system."
+      },
+      {
+        "from": "concept_nvm",
+        "to": "concept_cdd",
+        "type": "CO_OCCURS_WITH",
+        "conf": 0.75,
+        "rationale": "Given that NvM and CDD share 6 common neighbors, it suggests they often appear together in related contexts or processes, indicating a potential co-occurrence."
+      },
+      {
+        "from": "concept_task",
+        "to": "concept_service",
+        "type": "DEPENDS_ON",
+        "conf": 0.8,
+        "rationale": "Tasks often require services to be executed or completed, indicating a dependency relationship."
+      },
+      {
+        "from": "concept_runnable",
+        "to": "concept_port",
+        "type": "CO_OCCURS_WITH",
+        "conf": 0.7,
+        "rationale": "Both 'Runnable' and 'Port' are often found in the context of network programming and system design, where a runnable process might interact with a network port."
+      },
+      {
+        "from": "concept_vfb",
+        "to": "concept_moderequest",
+        "type": "CO_OCCURS_WITH",
+        "conf": 0.75,
+        "rationale": "Given that VFB and Moderequest share 6 common structural neighbours, it is likely that they co-occur in similar contexts or processes within the system."
+      },
+      {
+        "from": "concept_vfb",
+        "to": "concept_senderreceivercommunication",
+        "type": "COMMUNICATES_WITH",
+        "conf": 0.75,
+        "rationale": "Given that VFB (likely referring to a Virtual File Buffer or similar component) and SenderReceiverCommunication share multiple structural neighbors, it is plausible that VFB communicates with the sender-receiver system to facilitate data transfer or coordination."
+      },
+      {
+        "from": "concept_partition",
+        "to": "concept_modeswitchinterface",
+        "type": "INTERFACES_WITH",
+        "conf": 0.75,
+        "rationale": "Given that both 'Partition' and 'Modeswitchinterface' share multiple common neighbors, it is likely that they interact or interface with each other in some way, possibly to manage different modes or states within a partitioned system."
+      },
+      {
+        "from": "concept_swc",
+        "to": "concept_interface",
+        "type": "INTERACTS_WITH",
+        "conf": 0.75,
+        "rationale": "Given that 'Swc' and 'Interface' share multiple common neighbors, it is likely that they interact in some way, possibly through data exchange or control signals."
+      },
+      {
+        "from": "concept_dataelement",
+        "to": "concept_partition",
+        "type": "ASSOCIATES_WITH",
+        "conf": 0.8,
+        "rationale": "Given that 'Dataelement' and 'Partition' share multiple common neighbors, it is likely that they are associated in the context of data management or database design, where data elements are often organized into partitions for efficiency."
+      },
+      {
+        "from": "concept_senderreceiverinterface",
+        "to": "concept_modedeclarationgroup",
+        "type": "INTERACTS_WITH",
+        "conf": 0.75,
+        "rationale": "Given that both 'Senderreceiverinterface' and 'Modedeclarationgroup' share multiple common neighbors, it is likely that they interact within the same system or context, possibly during the configuration or operation of communication interfaces."
+      },
+      {
+        "from": "concept_senderreceiverinterface",
+        "to": "concept_runnable",
+        "type": "CO_OCCURS_WITH",
+        "conf": 0.8,
+        "rationale": "Both 'Senderreceiverinterface' and 'Runnable' are often used in the context of concurrent programming and communication between threads or processes, which explains their shared structural neighbors."
+      },
+      {
+        "from": "concept_ecu",
+        "to": "concept_port",
+        "type": "CONNECTS_TO",
+        "conf": 0.85,
+        "rationale": "An ECU (Electronic Control Unit) often connects to various ports for communication and data exchange, which is a fundamental aspect of automotive electronics systems."
+      }
+    ],
+    "errors": []
+  },
+  "verification_report": {
+    "run_at": "2026-05-13T09:03:45.413119+00:00",
+    "total_pending": 20,
+    "accepted": 0,
+    "rejected": 20,
+    "errors": []
+  },
+  "summarization_report": {
+    "run_at": "2026-05-13T09:04:38.067969+00:00",
+    "modules_updated": 0,
+    "modules_skipped": 0,
+    "errors": []
+  },
+  "gap_report": {
+    "run_at": "2026-05-13T09:04:38.082504+00:00",
+    "gaps_found": 0,
+    "gaps_written": 0,
+    "errors": []
+  },
+  "impact_report": {
+    "run_at": "2026-05-13T09:04:38.092916+00:00",
+    "changed_nodes": 0,
+    "impacted_nodes": 0,
+    "edges_written": 0,
+    "errors": []
+  },
+  "watchdog_report": {
+    "run_at": "2026-05-13T09:04:38.146583+00:00",
+    "metrics": [
+      {
+        "agent_name": "synthesis_agent",
+        "hypothesis_count": 215,
+        "rejection_count": 58,
+        "conflict_count": 0,
+        "error_count": 0,
+        "avg_confidence": 0.809,
+        "rejection_rate": 0.27,
+        "error_rate": 0.0,
+        "health": "ok"
+      },
+      {
+        "agent_name": "conflict_agent",
+        "hypothesis_count": 0,
+        "rejection_count": 0,
+        "conflict_count": 480,
+        "error_count": 0,
+        "avg_confidence": 0.0,
+        "rejection_rate": 0.0,
+        "error_rate": 0.0,
+        "health": "ok"
+      },
+      {
+        "agent_name": "evolution_agent",
+        "hypothesis_count": 0,
+        "rejection_count": 0,
+        "conflict_count": 0,
+        "error_count": 0,
+        "avg_confidence": 0.0,
+        "rejection_rate": 0.0,
+        "error_rate": 0.0,
+        "health": "ok"
+      }
+    ],
+    "alerts": [],
+    "actions": [],
+    "errors": []
+  },
+  "reasoning_results": [],
+  "total_flags": 0,
+  "total_conflicts": 53,
+  "total_hypotheses": 40,
+  "total_gaps": 0,
+  "total_impacted": 0,
+  "errors": [],
+  "status": "complete"
+}
