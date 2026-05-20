@@ -82,6 +82,41 @@ class OrchestratorState:
         return asdict(self)
 
 
+# ── Circuit breaker helpers ───────────────────────────────────────────────────
+
+# Error substrings that indicate infrastructure is unavailable (not an agent logic error).
+_INFRA_FAILURE_SIGNALS = (
+    "Cannot connect to Neo4j",
+    "ServiceUnavailable",
+    "ConnectionRefusedError",
+    "failed after 3 attempts",
+    "Neo4j database",
+)
+
+
+class _InfrastructureDown(RuntimeError):
+    """Raised when the circuit breaker detects a critical dependency outage."""
+    pass
+
+
+def _should_abort(state: OrchestratorState) -> bool:
+    """
+    Circuit breaker: return True if recent errors indicate a critical
+    infrastructure dependency (Neo4j, vLLM) is completely unavailable.
+    Prevents cascading failures where subsequent agents all fail individually
+    and pollute logs with redundant stack traces.
+    """
+    if not state.errors:
+        return False
+    # Check last 3 errors for infrastructure failure signals
+    recent_errors = state.errors[-3:]
+    infra_failures = sum(
+        1 for e in recent_errors
+        if any(sig in e for sig in _INFRA_FAILURE_SIGNALS)
+    )
+    return infra_failures >= 2
+
+
 # ── Main orchestration logic ──────────────────────────────────────────────────
 
 def run_cycle(
@@ -121,6 +156,8 @@ def run_cycle(
         state.total_flags      = evo.total_flagged
         state.errors.extend(evo.errors)
         log.info("  [1/8] Evolution: %d flagged", evo.total_flagged)
+        if _should_abort(state):
+            raise _InfrastructureDown("Neo4j or critical dependency unavailable after Evolution Agent")
 
         # ── 2. Conflict Agent ─────────────────────────────────────────────────
         state.current_agent = "conflict"
@@ -131,6 +168,8 @@ def run_cycle(
         state.total_conflicts  = con.total_conflicts
         state.errors.extend(con.errors)
         log.info("  [2/8] Conflict: %d conflicts", con.total_conflicts)
+        if _should_abort(state):
+            raise _InfrastructureDown("Critical dependency failure detected after Conflict Agent")
 
         # ── 3. Synthesis Agent ────────────────────────────────────────────────
         state.current_agent = "synthesis"
@@ -237,6 +276,12 @@ def run_cycle(
             state.total_impacted, len(state.errors),
         )
 
+    except _InfrastructureDown as exc:
+        msg = f"Orchestrator ABORTED (circuit breaker): {exc}"
+        log.error(msg)
+        state.errors.append(msg)
+        state.status = "aborted"
+        _checkpoint(state, state_dir)
     except Exception as exc:
         msg = f"Orchestrator cycle error: {exc}"
         log.error(msg)

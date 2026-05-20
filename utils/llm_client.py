@@ -95,6 +95,7 @@ async def acall_llm_json(
                 if attempt == retries:
                     log.debug("Async LLM call failed: %s", exc)
                     return None
+                await asyncio.sleep(1.5 ** attempt)
         return None
 
     if semaphore:
@@ -125,6 +126,7 @@ async def acall_llm_text(
                 if attempt == retries:
                     log.debug("Async LLM text call failed: %s", exc)
                     return ""
+                await asyncio.sleep(1.5 ** attempt)
         return ""
 
     if semaphore:

@@ -502,6 +502,15 @@ def _graph_docs_to_dicts(
                     label, coerced_label, raw_name
                 )
                 label = coerced_label
+            # POLICY ENFORCEMENT: Schema Boundary Guard
+            # If the LLM hallucinates an entirely new label not in ALLOWED_NODES,
+            # map it to "Concept" to prevent schema fragmentation in Neo4j.
+            elif label not in settings.ALLOWED_NODES and label != "Entity":
+                log.debug(
+                    "  Schema guard: unknown label '%s' -> 'Concept' for '%s'",
+                    label, raw_name,
+                )
+                label = "Concept"
 
             # Fix 2: For Module nodes, canonicalize the name through
             # CANONICAL_NAME_OVERRIDES so Track B module node_ids align with
