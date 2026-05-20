@@ -24,4 +24,10 @@ def get_logger(name: str) -> logging.Logger:
 
 
 def set_debug(debug: bool = True) -> None:
-    logging.getLogger().setLevel(logging.DEBUG if debug else logging.INFO)
+    level = logging.DEBUG if debug else logging.INFO
+    logging.getLogger().setLevel(level)
+    # Propagate to all named loggers (they have propagate=False)
+    for name in list(logging.Logger.manager.loggerDict):
+        logger = logging.getLogger(name)
+        if isinstance(logger, logging.Logger):
+            logger.setLevel(level)

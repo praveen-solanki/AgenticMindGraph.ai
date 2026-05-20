@@ -100,8 +100,7 @@ class CheckpointManager:
         tmp = path.with_suffix(".tmp")
         with open(tmp, "w", encoding="utf-8") as fh:
             json.dump(data, fh, ensure_ascii=False, indent=2)
-        # fsync before rename for durability
-        with open(tmp, "rb") as fh:
+            fh.flush()
             try:
                 os.fsync(fh.fileno())
             except OSError:

@@ -27,9 +27,6 @@ from config import settings
 
 log = get_logger("stage2")
 
-# Pages with these content_types are passed through to chunking
-_PASSTHROUGH_TYPES = {"content", "index_changelog", "glossary", "bibliography", "diagram"}
-
 # _CLEAN_SYSTEM = """You are cleaning an AUTOSAR specification page for a knowledge graph pipeline.
 
 #     Your task: return the cleaned version of the page text.

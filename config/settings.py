@@ -154,7 +154,6 @@ REQUIREMENT_ID_PATTERNS = [
     # --- Flexible / Generic fallback ---
     r"\[[A-Z][A-Za-z0-9]+_[A-Za-z]+_\d{5}\]",  # Any AUTOSAR-style bracketed ID
 
-    r"\[TR_[A-Za-z]+_\d{5}\]",   # Technical Report spec items (e.g. TR_OSTI_00001)
     r"\bISO\s+\d{4,5}(?:[-:]\d+)?\b",   # ISO standard refs (ISO 23150, ISO 23150:2021, ISO 26262)
     # --- Technical Report (TR) - CRITICAL: covers entire OS Tracing domain ---
     r"\[TR_[A-Za-z0-9]+_\d{5}\]",       # TR_OSTI_00001 etc. (note: [A-Za-z0-9] not [A-Za-z])
@@ -171,7 +170,6 @@ REQUIREMENT_ID_PATTERNS = [
     r"\[BM_[A-Za-z0-9]+_\d{5}\]",       # Bus Mirroring
     r"\[PDUR_[A-Za-z0-9]+_\d{5}\]",     # PDU Router / I-PDU Multiplexer
     r"\[FRT_[A-Za-z0-9]+_\d{5}\]",      # Free Running Timer
-    r"\bISO\s+\d{4,5}(?:[-:]\d+)?\b",   # ISO standard refs — not in Doc 3 at all
 ]
 # ══════════════════════════════════════════════════════════════════════════════
 # STAGE 4 — CHUNKING
@@ -264,8 +262,6 @@ ALLOWED_NODES = [
                           # AIHMIMultimediaAndTelematics, AIOccupantAndPedestrianSafety,
                           # AIPowertrain, AIUserGuide. AI application domains with specific
                           # sensor/actuator interfaces and safety requirements.
-    "SpecGap",            # Knowledge/specification gap node written by gap_detection_agent
-                          # — not present in Doc 4 at all
     'SensorInterface',
     'TracingInterface',
 ]

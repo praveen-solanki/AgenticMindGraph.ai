@@ -471,14 +471,14 @@ def _llm_reason(
     )
 
     weights = {
-        "prosecutor": settings.ASEI_REASONING_DEBATE_WEIGHT_HEAVY,
-        "defender":   settings.ASEI_REASONING_DEBATE_WEIGHT_MID,
-        "skeptic":    settings.ASEI_REASONING_DEBATE_WEIGHT_LOCAL,
+        "heavy_reasoning":  settings.ASEI_REASONING_DEBATE_WEIGHT_HEAVY,
+        "mid_reasoning":    settings.ASEI_REASONING_DEBATE_WEIGHT_MID,
+        "local_reasoning":  settings.ASEI_REASONING_DEBATE_WEIGHT_LOCAL,
     }
 
     responses: dict[str, dict] = {}
 
-    for task_type in ("prosecutor", "defender", "skeptic"):
+    for task_type in ("heavy_reasoning", "mid_reasoning", "local_reasoning"):
         try:
             r = call_agent_llm_json(task_type, _REASONING_SYSTEM, user, max_tokens=1024)
             if r and isinstance(r, dict) and r.get("answer"):
