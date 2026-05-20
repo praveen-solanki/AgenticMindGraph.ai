@@ -26,11 +26,12 @@ This directory contains the autonomous agents that power the self-evolving intel
 
 ### 5. Reasoning Agent (`reasoning_agent.py`)
 *   **Purpose:** Provides high-fidelity answers to user questions.
-*   **Logic:** Employs a multi-agent debate architecture:
-    *   **Prosecutor:** Argues for a specific interpretation.
-    *   **Defender:** Provides a counter-argument or alternative context.
-    *   **Skeptic:** Critiques both and looks for logical fallacies.
-*   **Output:** A consolidated answer with a confidence score and evidence paths.
+*   **Logic:** Employs a multi-agent debate architecture using three distinct LLM provider chains:
+    *   **Heavy Reasoning (Prosecutor):** Uses the most capable model to build the strongest case.
+    *   **Mid Reasoning (Defender):** Uses a mid-tier model for alternative interpretations.
+    *   **Local Reasoning (Skeptic):** Uses the local vLLM model to find holes in both arguments.
+*   **Weighted Vote:** Final answer is selected from the highest-weight responding leg; confidence is a weighted average of all valid responses.
+*   **Output:** A consolidated answer with a confidence score, reasoning chain, and evidence paths.
 
 ### 6. Gap Detection Agent (`gap_detection_agent.py`)
 *   **Purpose:** Identifies "holes" in the specification where information is expected but missing.
@@ -64,8 +65,9 @@ This directory contains the autonomous agents that power the self-evolving intel
 ### Orchestrator (`orchestrator.py`)
 The Orchestrator is the "brain" of the agent cycle. It:
 *   Maintains the `OrchestratorState`.
-*   Sequentially executes agents (Evolution → Conflict → Synthesis → Verification → etc.).
+*   Sequentially executes agents (Evolution → Conflict → Synthesis → Verification → Summarization → Gap Detection → Impact → Reasoning → Watchdog → Query Memory).
 *   Handles checkpointing for crash recovery.
+*   Implements a **circuit breaker** that aborts the cycle immediately if infrastructure dependencies (Neo4j, vLLM) are detected as unavailable, preventing cascading failures.
 *   Supports both "single-cycle" and "continuous service" modes.
 
 ### Router (`router.py`)
