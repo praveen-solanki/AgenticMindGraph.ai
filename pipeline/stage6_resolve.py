@@ -376,43 +376,221 @@ def _remap_relationships(
 # LLM helpers for resolution
 # ══════════════════════════════════════════════════════════════════════════════
 
-_UNCERTAIN_SYSTEM = """You are resolving AUTOSAR entity names.
-Given a list of entity names, determine which ones refer to the same AUTOSAR entity.
+# _UNCERTAIN_SYSTEM = """You are resolving AUTOSAR entity names.
+#     Given a list of entity names, determine which ones refer to the same AUTOSAR entity.
 
-Return ONLY a JSON object:
-{
-  "merge": true | false,
-  "canonical": "<most precise and standard canonical name if merge=true, else null>"
-}
+#     Return ONLY a JSON object:
+#     {
+#     "merge": true | false,
+#     "canonical": "<most precise and standard canonical name if merge=true, else null>"
+#     }
 
-Rules:
-- Use official AUTOSAR abbreviations as canonical (ComM not 'Communication Manager', RTE not 'Runtime Environment')
-- ISO 26262 is more canonical than ISO26262
-- Only merge if they clearly refer to the same entity; when in doubt, return merge=false
-- No markdown, no explanation"""
+#     Rules:
+#     - Use official AUTOSAR abbreviations as canonical (ComM not 'Communication Manager', RTE not 'Runtime Environment')
+#     - ISO 26262 is more canonical than ISO26262
+#     - Only merge if they clearly refer to the same entity; when in doubt, return merge=false
+#     - No markdown, no explanation"""
 
-_PREFIX_SYSTEM = """You are resolving AUTOSAR entity names that may have redundant prefixes.
-Given pairs of names like ('Concept_Job', 'Job') or ('Module_ComM', 'ComM'),
-determine which pairs should be merged and what the canonical name should be.
+#     _PREFIX_SYSTEM = """You are resolving AUTOSAR entity names that may have redundant prefixes.
+#     Given pairs of names like ('Concept_Job', 'Job') or ('Module_ComM', 'ComM'),
+#     determine which pairs should be merged and what the canonical name should be.
 
-Return ONLY a JSON array:
-[{"name_a": "...", "name_b": "...", "merge": true|false, "canonical": "<name>"}, ...]
+#     Return ONLY a JSON array:
+#     [{"name_a": "...", "name_b": "...", "merge": true|false, "canonical": "<name>"}, ...]
 
-Rules:
-- 'Concept_X' and 'X' for the same X → merge, canonical = 'X'
-- 'Module_X' and 'X' for the same X → merge, canonical = 'X'
-- 'Function_X' and 'X' for the same X → merge, canonical = 'X'
-- 'System_X' and 'X' for the same X → merge, canonical = 'X'
-- Only merge when the stripped name is clearly the same entity
-- No markdown, no explanation"""
+#     Rules:
+#     - 'Concept_X' and 'X' for the same X → merge, canonical = 'X'
+#     - 'Module_X' and 'X' for the same X → merge, canonical = 'X'
+#     - 'Function_X' and 'X' for the same X → merge, canonical = 'X'
+#     - 'System_X' and 'X' for the same X → merge, canonical = 'X'
+#     - Only merge when the stripped name is clearly the same entity
+#     - No markdown, no explanation"""
 
-_CANONICAL_SYSTEM = """You are selecting the canonical name for an AUTOSAR entity.
-Given a list of name variants that all refer to the same entity,
-return the single most precise and standard canonical form used in AUTOSAR specifications.
+# _CANONICAL_SYSTEM = """You are selecting the canonical name for an AUTOSAR entity.
+#     Given a list of name variants that all refer to the same entity,
+#     return the single most precise and standard canonical form used in AUTOSAR specifications.
 
-Return ONLY a JSON string: "<canonical name>"
-Examples: "ComM" not "communication manager"; "ISO 26262" not "ISO26262"; "RTE" not "Runtime Environment"
-No markdown, no explanation."""
+#     Return ONLY a JSON string: "<canonical name>"
+#     Examples: "ComM" not "communication manager"; "ISO 26262" not "ISO26262"; "RTE" not "Runtime Environment"
+#     No markdown, no explanation."""
+
+
+_PREFIX_SYSTEM = """You are a high-precision AUTOSAR entity canonicalization engine.
+
+    You are given pairs of entity names that may contain redundant prefixes.
+
+    Your task is to determine:
+    - whether the pair refers to the same AUTOSAR entity
+    - whether they should be merged
+    - what the canonical AUTOSAR name should be
+
+    Return ONLY a valid JSON array in this exact format:
+
+    [
+    {
+        "name_a": "...",
+        "name_b": "...",
+        "merge": true | false,
+        "canonical": "<canonical name>"
+    }
+    ]
+
+    STRICT OUTPUT RULES:
+    - Output ONLY valid JSON
+    - No markdown
+    - No explanations
+    - No comments
+    - No extra keys
+    - No trailing text
+
+    PREFIX NORMALIZATION RULES:
+
+    The following prefixes are considered potentially redundant:
+    - Concept_
+    - Module_
+    - Function_
+    - System_
+    - Service_
+    - Interface_
+    - Component_
+    - Class_
+
+    CANONICALIZATION RULE:
+    If:
+    Prefix_X
+    and
+    X
+
+    refer to the same semantic entity,
+    then:
+    - merge = true
+    - canonical = "X"
+
+    EXAMPLES:
+    - ("Concept_Job", "Job") → merge=true, canonical="Job"
+    - ("Module_ComM", "ComM") → merge=true, canonical="ComM"
+    - ("Function_CanIf_Transmit", "CanIf_Transmit") → merge=true
+
+    MERGE ONLY WHEN:
+    - removing the prefix preserves identical semantic meaning
+    - both names clearly refer to the same AUTOSAR entity
+    - the stripped form is a valid standalone canonical entity
+
+    DO NOT MERGE WHEN:
+    - stripping changes semantic meaning
+    - the prefixed name represents a different abstraction level
+    - the prefixed version refers to a namespace/container/category
+    - ambiguity exists
+
+    DO NOT:
+    - invent canonical names
+    - expand abbreviations
+    - rewrite AUTOSAR identifiers
+    - normalize official AUTOSAR casing
+
+    PRESERVE EXACT AUTOSAR CASING:
+    Examples:
+    - ComM
+    - CanIf
+    - CryIf
+    - NvM
+    - Dcm
+    - Dem
+
+    IMPORTANT:
+    When uncertain:
+    - merge=false
+    - canonical should equal the most precise original name
+
+    Return ONLY the JSON array.
+    """
+
+_CANONICAL_SYSTEM = """You are a high-precision AUTOSAR canonical entity naming engine.
+
+    You are given multiple name variants that ALL refer to the same AUTOSAR entity.
+
+    Your task is to select the SINGLE most precise, standard, and canonical AUTOSAR name.
+
+    Return ONLY a valid JSON string:
+
+    "<canonical name>"
+
+    STRICT OUTPUT RULES:
+    - Output ONLY the JSON string
+    - No markdown
+    - No explanations
+    - No comments
+    - No extra text
+
+    CANONICALIZATION PRINCIPLES:
+
+    1. Prefer official AUTOSAR abbreviations
+    Examples:
+    - "ComM" over "Communication Manager"
+    - "RTE" over "Runtime Environment"
+    - "NvM" over "Nonvolatile Memory Manager"
+
+    2. Prefer official AUTOSAR casing
+    Examples:
+    - CanIf
+    - CryIf
+    - ComM
+    - NvM
+    - Dcm
+    - Dem
+
+    3. Prefer official standards formatting
+    Examples:
+    - "ISO 26262" over "ISO26262"
+
+    4. Prefer concise canonical AUTOSAR terminology
+    Avoid verbose descriptive variants.
+
+    5. Preserve exact technical meaning
+    Do not generalize or simplify entities.
+
+    6. Preserve punctuation and spacing when part of official naming
+    Examples:
+    - "ISO 26262"
+    - "AUTOSAR Adaptive Platform"
+
+    DO NOT:
+    - invent new names
+    - paraphrase entities
+    - expand abbreviations unnecessarily
+    - normalize into informal naming
+    - alter official capitalization
+
+    CANONICAL NAME PRIORITY:
+    1. Official AUTOSAR specification naming
+    2. Widely accepted AUTOSAR abbreviation
+    3. Industry-standard formatting
+    4. Most precise technical variant
+
+    EXAMPLES:
+    Input variants:
+    - "Communication Manager"
+    - "ComM"
+
+    Output:
+    "ComM"
+
+    Input variants:
+    - "Runtime Environment"
+    - "RTE"
+
+    Output:
+    "RTE"
+
+    Input variants:
+    - "ISO26262"
+    - "ISO 26262"
+
+    Output:
+    "ISO 26262"
+
+    Return ONLY the JSON string.
+    """
 
 
 def _llm_pick_canonical_name(names: list[str]) -> str | None:

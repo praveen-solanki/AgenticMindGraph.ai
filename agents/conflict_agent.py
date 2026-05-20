@@ -323,9 +323,11 @@ def _classify_conflict(row: dict) -> dict | None:
         f"Embedding similarity score: {row.get('score', 'unknown'):.3f}"
     )
     try:
-        return call_agent_llm_json("heavy_reasoning", _CONFLICT_SYSTEM, user, max_tokens=256)
+        return call_agent_llm_json("heavy_reasoning", _CONFLICT_SYSTEM, user, max_tokens=1024)
     except Exception as exc:
-        log.debug("LLM classification failed: %s", exc)
+        # log.debug("LLM classification failed: %s", exc)
+        log.warning("LLM classification failed for pair (%s, %s): %s",
+            row.get("from_name"), row.get("to_name"), exc)
         return None
 
 
@@ -345,6 +347,7 @@ def _write_conflict_edges(
     on the node itself rather than as a self-loop edge.
     """
     if not pairs:
+        log.info("  No %s conflict pairs to write", conflict_type)
         return
 
     now = _now_iso()
@@ -366,11 +369,10 @@ def _write_conflict_edges(
             n.self_conflict_at     = $now
         """
         try:
-            neo.run_batch(cypher_self, rows)
-            # Manually pass `now` — run_batch doesn't support extra kwargs,
-            # so we execute directly for the small self-conflict set.
+            # neo.run_batch(cypher_self, rows)
             with neo.session() as s:
                 s.run(cypher_self, rows=rows, now=now)
+            log.info("  Self-conflicts written: %d nodes flagged", len(self_conflicts))
         except Exception as exc:
             log.warning("Self-conflict write failed: %s", exc)
 

@@ -73,6 +73,11 @@ def _apply_dynamic_schema(corpus_meta: dict) -> None:
 
     added_nodes = 0
     for node_type in extra_nodes:
+        # POLICY ENFORCEMENT: Never allow dynamic schema to expand into protected structural namespaces
+        if node_type in s.STRICT_STRUCTURAL_LABELS:
+            log.warning("  Dynamic schema: ignored '%s' suggestion (reserved structural type)", node_type)
+            continue
+
         if node_type and node_type not in s.ALLOWED_NODES:
             s.ALLOWED_NODES.append(node_type)
             added_nodes += 1
@@ -103,8 +108,11 @@ def main() -> None:
 
     # ── Invalidate checkpoints if requested ───────────────────────────────────
     if args.fresh:
-        log.info("--fresh: clearing all checkpoints")
+        log.info("--fresh: clearing all checkpoints and wiping Neo4j")
         ckpt.clear_all()
+        from utils.neo4j_client import Neo4jClient
+        with Neo4jClient() as neo:
+            neo.hard_reset()
     elif args.from_stage is not None:
         log.info("--from-stage %d: invalidating checkpoints from stage %d onwards",
                  args.from_stage, args.from_stage)

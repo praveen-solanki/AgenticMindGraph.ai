@@ -121,22 +121,52 @@ def run(
     return report
 
 
+# def _find_changed_nodes(neo: Neo4jClient, report: ImpactReport) -> list[str]:
+#     """Find recently stale or conflict-flagged nodes as impact sources."""
+#     q = """
+#     MATCH (n)
+#     WHERE (n.stale = true OR coalesce(n.self_conflict, false) = true)
+#       AND n.id IS NOT NULL
+#     RETURN n.id AS node_id
+#     UNION
+#     MATCH (a)-[:CONTRADICTS]-(b)
+#     WHERE a.id IS NOT NULL
+#     RETURN DISTINCT a.id AS node_id
+#     LIMIT $limit
+#     """
+#     try:
+#         rows = neo.run(q, limit=settings.ASEI_IMPACT_BATCH)
+#         return [r["node_id"] for r in rows if r.get("node_id")]
+#     except Exception as exc:
+#         report.errors.append(f"Changed node fetch failed: {exc}")
+#         return []
+
 def _find_changed_nodes(neo: Neo4jClient, report: ImpactReport) -> list[str]:
-    """Find recently stale or conflict-flagged nodes as impact sources."""
+    """Find recently stale, conflict-flagged, or contradicted nodes as impact sources."""
     q = """
     MATCH (n)
-    WHERE n.stale = true OR n.self_conflict = true
+    WHERE (n.stale = true OR coalesce(n.self_conflict, false) = true)
       AND n.id IS NOT NULL
-    RETURN n.id AS node_id
+    RETURN n.id AS node_id, 'flag' AS source
+    UNION
+    MATCH (a)-[:CONTRADICTS]-(b)
+    WHERE a.id IS NOT NULL
+    RETURN DISTINCT a.id AS node_id, 'contradicts' AS source
     LIMIT $limit
     """
     try:
         rows = neo.run(q, limit=settings.ASEI_IMPACT_BATCH)
-        return [r["node_id"] for r in rows if r.get("node_id")]
+        flagged     = [r["node_id"] for r in rows if r.get("source") == "flag"    and r.get("node_id")]
+        contradicts = [r["node_id"] for r in rows if r.get("source") == "contradicts" and r.get("node_id")]
+        node_ids    = list({*flagged, *contradicts})
+        log.info("  Changed node sources: stale/self_conflict=%d, contradicts=%d, total_unique=%d",
+                 len(flagged), len(contradicts), len(node_ids))
+        return node_ids
     except Exception as exc:
-        report.errors.append(f"Changed node fetch failed: {exc}")
+        msg = f"Changed node fetch failed: {exc}"
+        log.error(msg)
+        report.errors.append(msg)
         return []
-
 
 def _trace_impact(neo: Neo4jClient, node_id: str, report: ImpactReport) -> list[dict]:
     """
@@ -164,6 +194,7 @@ def _trace_impact(neo: Neo4jClient, node_id: str, report: ImpactReport) -> list[
     """
     try:
         rows = neo.run(q, node_id=node_id)
+        log.info("  Traversal for node=%s: %d affected nodes found", node_id, len(rows))
         affected = []
         for r in rows:
             # Compute edge-weight-adjusted impact score
@@ -225,7 +256,8 @@ def _write_impact_edges(
             )
             report.edges_written += 1
         except Exception as exc:
-            log.debug("Impact edge write failed: %s", exc)
+            # log.debug("Impact edge write failed: %s", exc)
+            log.warning("Impact edge write failed for src=%s dst=%s: %s", source_id, nid, exc)
 
     report.impacted_nodes += len(affected)
 
@@ -243,11 +275,12 @@ def _classify_severity(source_id: str, nodes: list[dict]) -> dict[str, str]:
         "Rate the impact severity for each node."
     )
     try:
-        result = call_agent_llm_json("impact", _IMPACT_SYSTEM, user, max_tokens=512)
+        result = call_agent_llm_json("impact", _IMPACT_SYSTEM, user, max_tokens=1024)
         if isinstance(result, list):
             return {item["node_id"]: item.get("severity", "minor") for item in result if "node_id" in item}
     except Exception as exc:
-        log.debug("LLM severity classification failed: %s", exc)
+        # log.debug("LLM severity classification failed: %s", exc)
+        log.warning("LLM severity classification failed for node=%s: %s", source_id, exc)
     return {}
 
 

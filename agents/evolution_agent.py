@@ -160,31 +160,28 @@ def _clear_stale_flags(neo: Neo4jClient) -> int:
     return result[0]["n"] if result else 0
 
 
+def _is_ageable(label: str) -> bool:
+    """
+    POLICY: Only age nodes that are authoritative and internal.
+    External citations (DocumentRef, StandardRef) should not age as they
+    are often not refreshed on every run.
+    """
+    return label not in {"DocumentRef", "StandardRef"}
+
+
 def _flag_by_staleness(neo: Neo4jClient, report: EvolutionReport) -> list[str]:
     """
     Flag nodes whose `ingested_at` is older than ASEI_STALENESS_DAYS.
-    Targets: Requirement, Entity, Concept — the three provenance-stamped labels.
+    Targets all ageable ALLOWED_NODES.
     """
     cutoff = _staleness_cutoff_iso()
     now    = _now_iso()
 
-    cypher = """
-    UNWIND ['Requirement', 'Entity', 'Concept'] AS lbl
-    CALL apoc.cypher.run(
-        'MATCH (n:' + lbl + ')
-         WHERE n.ingested_at IS NOT NULL
-           AND n.ingested_at < $cutoff
-         SET n.stale            = true,
-             n.staleness_reason = coalesce(n.staleness_reason + \",\", \"\") + \"age_exceeded\",
-             n.flagged_at       = $now
-         RETURN n.id AS node_id',
-        {cutoff: $cutoff, now: $now}
-    ) YIELD value
-    RETURN value.node_id AS node_id
-    """
-    # Fallback: APOC may not be available; use per-label queries instead.
     ids: list[str] = []
-    for label in ("Requirement", "Entity", "Concept"):
+    for label in settings.ALLOWED_NODES:
+        if not _is_ageable(label):
+            continue
+
         q = f"""
         MATCH (n:{label})
         WHERE n.ingested_at IS NOT NULL
@@ -216,7 +213,7 @@ def _flag_by_low_confidence(neo: Neo4jClient, report: EvolutionReport) -> list[s
     now       = _now_iso()
     ids: list[str] = []
 
-    for label in ("Requirement", "Entity", "Concept"):
+    for label in settings.ALLOWED_NODES:
         q = f"""
         MATCH (n:{label})
         WHERE n.confidence_score IS NOT NULL
@@ -252,7 +249,7 @@ def _flag_by_schema_drift(neo: Neo4jClient, report: EvolutionReport) -> list[str
     now             = _now_iso()
     ids: list[str]  = []
 
-    for label in ("Requirement", "Entity", "Concept"):
+    for label in settings.ALLOWED_NODES:
         q = f"""
         MATCH (n:{label})
         WHERE n.pipeline_version IS NOT NULL

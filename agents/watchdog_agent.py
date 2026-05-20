@@ -161,21 +161,6 @@ def _check_thresholds(m: AgentMetric, report: WatchdogReport) -> None:
         report.alerts.append(alert)
         m.health = "degraded"
 
-        # Auto-action: raise synthesis confidence threshold for next cycle
-        if m.agent_name == "synthesis_agent":
-            action = (
-                f"ACTION: Raising ASEI_SYNTHESIS_MIN_CONFIDENCE from "
-                f"{settings.ASEI_SYNTHESIS_MIN_CONFIDENCE:.2f} to "
-                f"{min(settings.ASEI_SYNTHESIS_MIN_CONFIDENCE + 0.05, 0.95):.2f}"
-            )
-            log.info(action)
-            report.actions.append(action)
-            # Note: runtime settings change — persists for this process only.
-            # Operator should update settings.py or env var for permanent change.
-            settings.ASEI_SYNTHESIS_MIN_CONFIDENCE = min(
-                settings.ASEI_SYNTHESIS_MIN_CONFIDENCE + 0.05, 0.95
-            )
-
     total_ops = max(m.hypothesis_count + m.conflict_count, 1)
     m.error_rate = round(m.error_count / total_ops, 3)
     if m.error_rate >= error_ceiling:

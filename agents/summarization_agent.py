@@ -130,7 +130,7 @@ def _update_module_summary(neo: Neo4jClient, mod: dict, report: SummarizationRep
     )
 
     updated_summary = call_agent_llm(
-        "summarization", _SUMMARY_SYSTEM, user, max_tokens=400, temperature=0.1
+        "summarization", _SUMMARY_SYSTEM, user, max_tokens=1024, temperature=0.1
     )
     if not updated_summary:
         report.modules_skipped += 1

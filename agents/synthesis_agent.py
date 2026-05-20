@@ -264,7 +264,7 @@ def _propose_hypothesis(row: dict) -> dict | None:
         "not already captured in the graph?"
     )
     try:
-        return call_agent_llm_json("synthesis", _SYNTHESIS_SYSTEM, user, max_tokens=300)
+        return call_agent_llm_json("synthesis", _SYNTHESIS_SYSTEM, user, max_tokens=1024)
     except Exception as exc:
         log.debug("LLM hypothesis generation failed: %s", exc)
         return None

@@ -154,11 +154,11 @@ def _verify_one(neo: Neo4jClient, hyp: dict, report: VerificationReport) -> None
         f"KG counterevidence score: {counter_score:.2f}\n\n"
         "Find reasons to REJECT this hypothesis."
     )
-    result = call_agent_llm_json("heavy_reasoning", _DISPROOF_SYSTEM, user, max_tokens=300)
+    result = call_agent_llm_json("heavy_reasoning", _DISPROOF_SYSTEM, user, max_tokens=1024)
     if not result:
-        # LLM failure — default accept
-        _write_verdict(neo, hyp, verdict="accept", reason="LLM unavailable, default accept", conf=0.5)
-        report.accepted += 1
+        # LLM failure — fail closed. Leave unverified for next cycle.
+        log.warning("Verification skipped due to LLM failure for hyp: %s -> %s", hyp['from_id'], hyp['to_id'])
+        report.errors.append("LLM unavailable during verification")
         return
 
     disproof_conf = float(result.get("disproof_confidence", 0.0))

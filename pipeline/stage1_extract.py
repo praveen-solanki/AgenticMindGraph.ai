@@ -1,115 +1,3 @@
-# """
-# pipeline/stage1_extract.py
-# ==========================
-# Stage 1: PDF → per-page Markdown using pymupdf4llm.
-
-# Output schema (list of dicts, one per page):
-#     {
-#         "source":      "path/to/file.pdf",
-#         "filename":    "AUTOSAR_SWS_ComM.pdf",
-#         "page":        3,           # 0-indexed
-#         "page_1idx":   4,           # 1-indexed (human-readable)
-#         "markdown":    "## 3.2 ...",
-#         "char_count":  1842,
-#     }
-# """
-
-# from __future__ import annotations
-
-# import sys
-# from pathlib import Path
-# from typing import TYPE_CHECKING
-
-# from utils.logger import get_logger
-# from config import settings
-
-# if TYPE_CHECKING:
-#     pass
-
-# log = get_logger("stage1")
-
-
-# def run(pdf_dir: Path) -> list[dict]:
-#     """
-#     Extract all PDFs under pdf_dir.
-#     Returns a flat list of page dicts (one entry per page).
-#     """
-#     try:
-#         import pymupdf4llm
-#         import pymupdf  # fitz
-#     except ImportError:
-#         sys.exit("pymupdf4llm not installed. Run: pip install pymupdf4llm")
-
-#     pdfs = sorted(pdf_dir.glob("**/*.pdf"))
-#     if not pdfs:
-#         sys.exit(f"No PDFs found in {pdf_dir}")
-
-#     log.info("Found %d PDF(s) in %s", len(pdfs), pdf_dir)
-
-#     all_pages: list[dict] = []
-#     skipped_files = 0
-
-#     for pdf_path in pdfs:
-#         log.info("Extracting: %s", pdf_path.name)
-#         try:
-#             pages = _extract_pdf(pdf_path)
-#             all_pages.extend(pages)
-#             log.info("  → %d pages extracted", len(pages))
-#         except Exception as exc:
-#             log.warning("SKIPPED %s — %s: %s", pdf_path.name, type(exc).__name__, exc)
-#             skipped_files += 1
-
-#     log.info(
-#         "Stage 1 complete: %d pages from %d file(s) (%d skipped)",
-#         len(all_pages), len(pdfs) - skipped_files, skipped_files,
-#     )
-#     return all_pages
-
-
-# def _extract_pdf(pdf_path: Path) -> list[dict]:
-#     """Extract one PDF, return list of page dicts."""
-#     import pymupdf4llm
-#     import pymupdf
-
-#     doc = pymupdf.open(str(pdf_path))
-#     n_pages = len(doc)
-#     doc.close()
-
-#     # pymupdf4llm.to_markdown with page_chunks=True returns one dict per page.
-#     # margins: (left, top, right, bottom) as fractions 0-1 of page dimensions.
-#     # We crop top and bottom to remove running headers and footers.
-#     page_chunks = pymupdf4llm.to_markdown(
-#         str(pdf_path),
-#         page_chunks=True,          # one dict per page
-#         margins=(                  # (left, top, right, bottom) fractions
-#             0,
-#             settings.PDF_HEADER_MARGIN,
-#             0,
-#             settings.PDF_FOOTER_MARGIN,
-#         ),
-#         show_progress=False,
-#     )
-
-#     pages: list[dict] = []
-#     for chunk in page_chunks:
-#         # page_chunks returns dicts with keys: 'metadata', 'text'
-#         # metadata contains: 'page' (0-indexed), 'file_path', etc.
-#         meta     = chunk.get("metadata", {})
-#         page_idx = meta.get("page", len(pages))       # 0-indexed
-#         text     = chunk.get("text", "")
-
-#         pages.append({
-#             "source":    str(pdf_path),
-#             "filename":  pdf_path.name,
-#             "page":      page_idx,
-#             "page_1idx": page_idx + 1,
-#             "markdown":  text,
-#             "char_count": len(text),
-#         })
-
-#     return pages
-
-
 """
 pipeline/stage1_extract.py
 ==========================
@@ -149,22 +37,167 @@ from config import settings
 
 log = get_logger("stage1")
 
-_CLASSIFY_SYSTEM = """You are processing AUTOSAR specification PDF pages.
-Classify each page into exactly one type.
+# _CLASSIFY_SYSTEM = """You are processing AUTOSAR specification PDF pages.
+# Classify each page into exactly one type.
 
-Return ONLY a JSON object: {"type": "<type>", "confidence": 0.0-1.0}
-No markdown, no explanation.
+# Return ONLY a JSON object: {"type": "<type>", "confidence": 0.0-1.0}
+# No markdown, no explanation.
 
-Types:
-- content         Real specification text with requirements, descriptions, API specs
-- toc             Table of contents (entries with page numbers and dots/tabs)
-- cover           Document cover page / metadata table (Document Title, Owner, ID, Status)
-- revision        Revision/change history table (dates, versions, authors, descriptions)
-- legal           Legal disclaimer, copyright, confidentiality notice
-- index_changelog Annex/appendix listing added/changed/deleted spec items as a flat table
-- diagram         Page dominated by figures, UML diagrams; very little text
-- abbreviations   Abbreviations, acronyms, or glossary list
-- bibliography    References, bibliography, normative/informative references list"""
+# Types:
+# - content         Real specification text with requirements, descriptions, API specs
+# - toc             Table of contents (entries with page numbers and dots/tabs)
+# - cover           Document cover page / metadata table (Document Title, Owner, ID, Status)
+# - revision        Revision/change history table (dates, versions, authors, descriptions)
+# - legal           Legal disclaimer, copyright, confidentiality notice
+# - index_changelog Annex/appendix listing added/changed/deleted spec items as a flat table
+# - diagram         Page dominated by figures, UML diagrams; very little text
+# - abbreviations   Abbreviations, acronyms, or glossary list
+# - bibliography    References, bibliography, normative/informative references list"""
+
+_CLASSIFY_SYSTEM = """You are a high-precision AUTOSAR specification PDF page classifier.
+
+    You are given exactly ONE PDF page at a time.
+
+    Your task is to classify the page into exactly ONE page type based on the page's PRIMARY purpose and DOMINANT content signal.
+
+    You must return ONLY a valid JSON object in this exact format:
+    {"type": "<type>", "confidence": 0.0-1.0}
+
+    STRICT OUTPUT RULES:
+    - Output ONLY JSON
+    - No markdown
+    - No explanations
+    - No extra keys
+    - No comments
+    - No trailing text
+    - Confidence must be a float between 0.0 and 1.0
+
+    ALLOWED TYPES:
+    - content
+    - toc
+    - cover
+    - revision
+    - legal
+    - index_changelog
+    - diagram
+    - abbreviations
+    - bibliography
+
+    CLASSIFICATION GUIDELINES:
+
+    1. content
+    Use when the page primarily contains:
+    - AUTOSAR requirements
+    - API specifications
+    - parameter descriptions
+    - behavior definitions
+    - architectural explanations
+    - protocol descriptions
+    - structured technical paragraphs
+    - specification tables tied to functionality
+
+    This is the default type for real specification material.
+
+    2. toc
+    Use when the page is primarily a table of contents.
+    Strong signals:
+    - hierarchical section listings
+    - dotted leaders or tab spacing
+    - many page numbers
+    - chapter/subchapter navigation entries
+
+    3. cover
+    Use for document identity or metadata pages.
+    Strong signals:
+    - document title
+    - document ID
+    - release/status
+    - owner information
+    - AUTOSAR logo/header metadata
+    - approval metadata
+    - document information tables
+
+    4. revision
+    Use for revision history or change tracking pages.
+    Strong signals:
+    - version history tables
+    - change descriptions
+    - dates
+    - authors
+    - release history
+    - modification logs
+
+    5. legal
+    Use for legal or compliance pages.
+    Strong signals:
+    - copyright notices
+    - confidentiality statements
+    - licensing text
+    - liability disclaimers
+    - legal restrictions
+    - trademarks
+
+    6. index_changelog
+    Use for annex/index-style pages listing changed items.
+    Strong signals:
+    - flat structured tables
+    - added/modified/deleted entries
+    - requirement IDs
+    - change indexes
+    - appendix-style delta listings
+
+    Do NOT use for normal revision history pages.
+
+    7. diagram
+    Use when the page is visually dominated by:
+    - UML diagrams
+    - flowcharts
+    - architecture figures
+    - block diagrams
+    - sequence diagrams
+    - graphical relationships
+
+    The page should contain relatively little continuous prose.
+
+    8. abbreviations
+    Use for glossary-like pages.
+    Strong signals:
+    - acronym expansions
+    - abbreviation tables
+    - terminology definitions
+    - glossary entries
+    - term-definition mappings
+
+    9. bibliography
+    Use for references or cited materials.
+    Strong signals:
+    - normative references
+    - informative references
+    - standards lists
+    - external documents
+    - citations
+    - bibliography sections
+
+    IMPORTANT DECISION RULES:
+    - Choose EXACTLY ONE type
+    - Use the DOMINANT page purpose
+    - Ignore headers/footers/page numbers unless they dominate the page
+    - If mixed content exists, classify using the majority signal
+    - Prefer "content" when real specification text dominates
+    - Prefer "diagram" only if graphics dominate the page visually
+    - Prefer "revision" over "index_changelog" for normal version history tables
+    - Prefer "index_changelog" only for annex-style changed-item listings
+    - Do not infer document-level meaning from neighboring pages
+    - Classify ONLY the current page
+
+    CONFIDENCE GUIDELINES:
+    - 0.95-1.00 = extremely clear classification
+    - 0.80-0.94 = strong signal with minor ambiguity
+    - 0.60-0.79 = moderate ambiguity
+    - 0.40-0.59 = weak or mixed signals
+
+    Return ONLY the JSON object.
+    """
 
 _TYPE_TO_CONTENT_TYPE = {
     "content":         "content",
