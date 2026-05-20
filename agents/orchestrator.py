@@ -219,6 +219,15 @@ def run_cycle(
         state.errors.extend(imp.errors)
         log.info("  [7/8] Impact: %d nodes traced", imp.impacted_nodes)
 
+        # ── 7b. Community Detection (runs after Impact, before Reasoning) ─────
+        state.current_agent = "community"
+        _checkpoint(state, state_dir)
+        from agents.community_agent import run as run_community
+        comm = run_community(neo=neo)
+        state.errors.extend(comm.errors)
+        log.info("  [7b/8] Community: %d detected, %d summarized",
+                 comm.communities_detected, comm.summaries_generated)
+
         # Extract impacted node IDs to pass to Reasoning Agent so IMPACT_OF
         # edges are not a write-only artefact. The impact agent report may
         # expose them under different field names depending on its version;

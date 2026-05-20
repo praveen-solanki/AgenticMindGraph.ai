@@ -167,6 +167,21 @@ def _verify_one(neo: Neo4jClient, hyp: dict, report: VerificationReport) -> None
 
     # Combine LLM disproof + KG counterevidence
     combined_disproof = max(disproof_conf, counter_score * 0.7)
+
+    # ── Human-in-the-Loop gate ────────────────────────────────────────────────
+    # Check if this hypothesis requires human review before final commitment
+    from agents.human_review import should_require_human_review, create_review_item
+    needs_review, review_reason = should_require_human_review(hyp, combined_disproof, neo)
+    if needs_review:
+        create_review_item(neo, hyp, review_reason, combined_disproof)
+        log.info(
+            "  HITL: hypothesis %s → %s flagged for human review (%s)",
+            hyp["from_id"], hyp["to_id"], review_reason,
+        )
+        # Don't accept or reject — leave in pending_review state
+        return
+
+    # ── Auto-decision (no human review needed) ────────────────────────────────
     if verdict == "reject" or combined_disproof >= settings.ASEI_VERIFICATION_REJECT_THRESHOLD:
         _write_verdict(neo, hyp, verdict="reject", reason=reason, conf=combined_disproof)
         report.rejected += 1

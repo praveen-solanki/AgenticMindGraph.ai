@@ -29,6 +29,7 @@ from collections import defaultdict
 
 from utils.logger import get_logger
 from utils.llm_client import call_llm_json
+from utils.neo4j_client import Neo4jClient
 from config import settings
 
 log = get_logger("stage6")
@@ -240,23 +241,46 @@ def _is_antonym_pair(name_a: str, name_b: str) -> bool:
 
 def _cluster_entities(nodes: list[dict]) -> tuple[list[dict], dict[str, str]]:
     """
-    Embed all entity names with BGE-M3, cluster by cosine similarity,
-    pick the most frequent name as canonical per cluster.
+    Resolve duplicate entities using Neo4j's native vector index for
+    scalable nearest-neighbor search (O(N log N) instead of O(N²)).
 
-    BUG FIX (over-merge): old code clustered all "other" nodes together
-    regardless of label. That allowed e.g. a Concept node and a Function node
-    with similar names to be merged, and let antonym pairs like
-    "Symmetrical Encryption" / "Symmetrical Decryption" be merged because
-    their embeddings are very close.
+    Falls back to in-memory dense matrix if Neo4j is unavailable.
 
-    Fix 1: cluster within the same label only.
-    Fix 2: skip union if either member is an antonym of the other.
+    BUG FIX (over-merge): cluster within the same label only.
+    BUG FIX (antonyms): skip known antonym pairs.
 
     Returns (canonical_nodes, remap_dict).
     """
     if len(nodes) < 2:
         return nodes, {}
 
+    # Attempt graph-native resolution via Neo4j vector index
+    try:
+        from utils.vector_resolution import resolve_entities_via_vector_index
+        neo = Neo4jClient()
+        try:
+            log.info("  Tier 2: using graph-native vector resolution (%d entities)", len(nodes))
+            result = resolve_entities_via_vector_index(
+                neo=neo,
+                nodes=nodes,
+                antonym_check_fn=_is_antonym_pair,
+                llm_pick_canonical_fn=_llm_pick_canonical_name,
+            )
+            return result
+        finally:
+            neo.close()
+    except Exception as exc:
+        log.warning("  Tier 2: graph-native resolution failed (%s), falling back to in-memory", exc)
+
+    # Fallback: in-memory dense matrix (for when Neo4j is unavailable)
+    return _cluster_entities_inmemory(nodes)
+
+
+def _cluster_entities_inmemory(nodes: list[dict]) -> tuple[list[dict], dict[str, str]]:
+    """
+    Fallback: in-memory entity clustering using dense cosine similarity matrix.
+    Used when Neo4j is unavailable (e.g., during unit tests or offline processing).
+    """
     try:
         from sentence_transformers import SentenceTransformer
         import numpy as np
@@ -266,9 +290,9 @@ def _cluster_entities(nodes: list[dict]) -> tuple[list[dict], dict[str, str]]:
 
     names = [str(n["properties"].get("name", n["node_id"])) for n in nodes]
 
-    log.info("  Tier 2: embedding %d entity names ...", len(names))
-    model       = SentenceTransformer(settings.EMBED_MODEL)
-    embeddings  = model.encode(
+    log.info("  Tier 2 (fallback): embedding %d entity names in-memory ...", len(names))
+    model = SentenceTransformer(settings.EMBED_MODEL)
+    embeddings = model.encode(
         names,
         normalize_embeddings=True,
         batch_size=32,
@@ -288,21 +312,18 @@ def _cluster_entities(nodes: list[dict]) -> tuple[list[dict], dict[str, str]]:
         parent[find(x)] = find(y)
 
     threshold = settings.ENTITY_RESOLUTION_THRESHOLD
-    sim_matrix = embeddings @ embeddings.T   # cosine similarity (normalized)
+    sim_matrix = embeddings @ embeddings.T
 
     for i in range(len(nodes)):
         for j in range(i + 1, len(nodes)):
             if sim_matrix[i, j] < threshold:
                 continue
-            # BUG FIX 1: never merge nodes of different labels
             if nodes[i].get("label") != nodes[j].get("label"):
                 continue
-            # BUG FIX 2: never merge antonym pairs
             if _is_antonym_pair(names[i], names[j]):
                 continue
             union(i, j)
 
-    # Group by cluster root
     clusters: dict[int, list[int]] = defaultdict(list)
     for i in range(len(nodes)):
         clusters[find(i)].append(i)
@@ -315,15 +336,13 @@ def _cluster_entities(nodes: list[dict]) -> tuple[list[dict], dict[str, str]]:
             canonical_nodes.append(nodes[members[0]])
             continue
 
-        # Pick canonical = LLM-selected name (or most frequent if LLM fails)
         member_names = [names[i] for i in members]
         canonical_name = _llm_pick_canonical_name(member_names) or max(set(member_names), key=member_names.count)
         label = nodes[members[0]].get("label", "Entity")
-        safe  = re.sub(r"\s+", "_", canonical_name.lower())
-        safe  = re.sub(r"[^a-z0-9_]", "", safe)[:60]
+        safe = re.sub(r"\s+", "_", canonical_name.lower())
+        safe = re.sub(r"[^a-z0-9_]", "", safe)[:60]
         canonical_id = f"{label.lower()}_{safe}"
 
-        # Merge properties from all members
         merged_props = {}
         all_aliases: list[str] = []
         for idx in members:
@@ -332,7 +351,7 @@ def _cluster_entities(nodes: list[dict]) -> tuple[list[dict], dict[str, str]]:
             if n not in all_aliases:
                 all_aliases.append(n)
 
-        merged_props["name"]    = canonical_name
+        merged_props["name"] = canonical_name
         merged_props["aliases"] = all_aliases
 
         canonical_nodes.append({
@@ -341,7 +360,6 @@ def _cluster_entities(nodes: list[dict]) -> tuple[list[dict], dict[str, str]]:
             "properties": merged_props,
         })
 
-        # Build remap for all non-canonical members
         for idx in members:
             old_id = nodes[idx]["node_id"]
             if old_id != canonical_id:
