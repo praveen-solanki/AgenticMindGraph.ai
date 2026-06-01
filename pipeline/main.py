@@ -47,7 +47,7 @@ def parse_args() -> argparse.Namespace:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
-    p.add_argument("--pdf-dir",    required=True,  help="Directory containing AUTOSAR PDFs")
+    p.add_argument("--pdf-dir",    required=False, default=None, help="Directory containing AUTOSAR PDFs (full pipeline)")
     p.add_argument("--output-dir", required=True,  help="Root output / checkpoint directory")
     p.add_argument(
         "--from-stage", type=int, default=None, metavar="N",
@@ -56,6 +56,14 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "--fresh", action="store_true",
         help="Discard ALL checkpoints and restart from stage 1.",
+    )
+    p.add_argument(
+        "--add-pdf", action="append", default=[],
+        help="Incrementally add a single PDF without reprocessing (repeatable)",
+    )
+    p.add_argument(
+        "--add-pdf-dir", default=None,
+        help="Incrementally add all PDFs in a directory without reprocessing",
     )
     p.add_argument("--debug", action="store_true", help="Enable DEBUG logging")
     return p.parse_args()
@@ -97,12 +105,46 @@ def _apply_dynamic_schema(corpus_meta: dict) -> None:
 
 def main() -> None:
     args       = parse_args()
-    pdf_dir    = Path(args.pdf_dir)
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
     if args.debug:
         set_debug(True)
+
+    # ── Incremental mode: --add-pdf / --add-pdf-dir ───────────────────────────
+    if args.add_pdf or args.add_pdf_dir:
+        from pipeline.incremental import run_incremental
+        import json
+
+        pdf_paths: list[Path] = []
+        for pdf_str in args.add_pdf:
+            p = Path(pdf_str)
+            if p.exists():
+                pdf_paths.append(p)
+            else:
+                log.warning("PDF not found: %s", pdf_str)
+        if args.add_pdf_dir:
+            d = Path(args.add_pdf_dir)
+            if d.is_dir():
+                pdf_paths.extend(sorted(d.glob("**/*.pdf")))
+            else:
+                log.error("Directory not found: %s", args.add_pdf_dir)
+                sys.exit(1)
+
+        if not pdf_paths:
+            log.error("No PDFs found for incremental ingestion")
+            sys.exit(1)
+
+        summary = run_incremental(pdf_paths, output_dir, debug=args.debug)
+        print(json.dumps(summary, indent=2))
+        sys.exit(1 if summary["errors"] else 0)
+
+    # ── Full pipeline mode: --pdf-dir ─────────────────────────────────────────
+    if not args.pdf_dir:
+        log.error("Either --pdf-dir (full pipeline) or --add-pdf/--add-pdf-dir (incremental) is required")
+        sys.exit(1)
+
+    pdf_dir = Path(args.pdf_dir)
 
     ckpt = CheckpointManager(output_dir)
 

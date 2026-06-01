@@ -29,7 +29,7 @@ Each agent has specific parameters that control its behavior:
 *   **Evolution Agent**: Staleness days and confidence thresholds.
 *   **Conflict Agent**: Structural and semantic comparison limits.
 *   **Synthesis Agent**: Hypothesis candidate limits and minimum confidence.
-*   **Reasoning Agent**: Top-K retrieval, max hops for graph traversal, and debate weights (Prosecutor/Defender/Skeptic).
+*   **Reasoning Agent**: Top-K retrieval, max hops for graph traversal, and debate weights for the three reasoning legs (heavy_reasoning=0.45, mid_reasoning=0.35, local_reasoning=0.20).
 *   **Impact Agent**: Max hops for ripple-effect analysis.
 
 ### 6. Multi-LLM Provider Configuration

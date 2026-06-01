@@ -167,11 +167,36 @@ def _cmd_query_memory(args: argparse.Namespace) -> None:
     _exit_for_errors(payload)
 
 
+def _cmd_community(args: argparse.Namespace) -> None:
+    from agents.community_agent import run as run_community
+
+    payload = _print_json(run_community())
+    _exit_for_errors(payload)
+
+
 def _cmd_routes(args: argparse.Namespace) -> None:
     from agents.router import describe_chains
 
     print(json.dumps(describe_chains(), indent=2))
     sys.exit(0)
+
+
+def _cmd_supervise(args: argparse.Namespace) -> None:
+    """Run a supervised ASEI cycle — only invokes agents that have work."""
+    from agents.supervisor import run_supervised
+
+    result = run_supervised(
+        question=args.question or None,
+        state_dir=Path(args.state_dir) if args.state_dir else None,
+    )
+    payload = _print_json(result)
+    sys.exit(0 if payload.get("status") == "complete" else 1)
+
+
+def _cmd_review(args: argparse.Namespace) -> None:
+    """Human-in-the-Loop review management for hypotheses."""
+    from agents.human_review import run_cli
+    run_cli(args)
 
 
 # ── Argument parsing ──────────────────────────────────────────────────────────
@@ -241,6 +266,23 @@ def _build_parser() -> argparse.ArgumentParser:
     p_qm.add_argument("--answer", default="", help="Optional answer text for the stored query pattern")
     p_qm.add_argument("--confidence", type=float, default=0.0, help="Confidence for the stored query pattern")
 
+    sub.add_parser("community", help="Run only the Community Detection Agent")
+
+    p_supervise = sub.add_parser("supervise", help="Run a supervised cycle (dynamic agent invocation)")
+    p_supervise.add_argument("--question", default=None, help="Question for Reasoning Agent")
+    p_supervise.add_argument(
+        "--state-dir",
+        default=settings.ASEI_STATE_DIR,
+        help="Directory for cycle state checkpoints",
+    )
+
+    p_review = sub.add_parser("review", help="Human-in-the-Loop review management")
+    p_review.add_argument("--list", action="store_true", help="List pending reviews")
+    p_review.add_argument("--approve", default=None, metavar="REVIEW_ID", help="Approve a review item")
+    p_review.add_argument("--reject", default=None, metavar="REVIEW_ID", help="Reject a review item")
+    p_review.add_argument("--reason", default="", help="Reason for approval/rejection")
+    p_review.add_argument("--approve-all", action="store_true", help="Batch approve all pending reviews")
+
     sub.add_parser("routes", help="Print task-to-provider routing chains")
 
     return p
@@ -259,6 +301,9 @@ _COMMAND_MAP = {
     "impact": _cmd_impact,
     "watchdog": _cmd_watchdog,
     "query-memory": _cmd_query_memory,
+    "community": _cmd_community,
+    "supervise": _cmd_supervise,
+    "review": _cmd_review,
     "routes": _cmd_routes,
 }
 
